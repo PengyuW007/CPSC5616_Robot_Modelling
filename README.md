@@ -9,7 +9,8 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 3. [Zhu, Ziping](https://github.com/0v0-QAQ), 0422426
 
 ### [Repository](https://github.com/PengyuW007/CPSC5616_Robot_Modelling.git) 
-OR	gh repo clone PengyuW007/CPSC5616_Robot_Modelling
+OR	
+gh repo clone PengyuW007/CPSC5616_Robot_Modelling
 
 
 ### Documents
