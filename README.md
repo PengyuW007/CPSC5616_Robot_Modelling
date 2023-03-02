@@ -1,4 +1,4 @@
-# **CPSC5616**: Robot Modelling by Using LSTMs
+# **CPSC 5616**: Robot Modelling by Using LSTMs
 
 ### Description
 Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
