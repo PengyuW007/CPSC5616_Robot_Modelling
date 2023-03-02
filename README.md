@@ -15,6 +15,6 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 
 ### Documents
 
-## Compile and Run
+### Compile and Run
 
 ### Additional notes
