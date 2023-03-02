@@ -12,7 +12,6 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 
 	gh repo clone PengyuW007/CPSC5616_Robot_Modelling
 
-
 ### Documents
 
 ### Compile and Run
