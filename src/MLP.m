@@ -47,6 +47,9 @@ up2 = 1/sqrt(M);
 w2_1d = low2 + (up2-low2).*rand((M+1)*N,1);
 w2 = reshape(w2_1d,[(M+1),N]);
 
+w1_epoch = zeros(R,(L+1)*M);
+w2_epoch = zeros(R,(M+1)*N);
+
 for r = TRAIN
     x = zeros(1,L);
     for i = 1:L
@@ -94,7 +97,7 @@ for r = TRAIN
         y2(n) = net2(n);
     end
 
-    E = 0.5*(Y_ - y2).^2; % Error cost function
+    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,5 +134,16 @@ for r = TRAIN
         end
         w1(L+1,m) = ETA*delta_hid(m)*BIAS + w1(L+1,m);
     end
+
+    % add w1, w2 weights into epoch array
+    w1_1d_ = reshape(w1,[1,(L+1)*M]);
+    w2_1d_ = reshape(w2,[1,(M+1)*N]);
+    for i=1:(L+1)*M
+        w1_epoch(r,i) = w1_1d_(i);
+    end
+    for i = 1:(M+1)*N
+        w2_epoch(r,i)=w2_1d_(i);
+    end
+
 end % end Training
 toc;
