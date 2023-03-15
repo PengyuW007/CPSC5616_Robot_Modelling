@@ -374,10 +374,10 @@ figure;
 subplot(1,2,1);
 plot(w1_epoch);
 xlabel("Iteration");
-ylabel("Weights");
+ylabel("w1 Weights");
 subplot(1,2,2);
 plot(w2_epoch);
 xlabel("Iteration");
-ylabel("Weights");
+ylabel("w2 Weights");
 
 toc;
