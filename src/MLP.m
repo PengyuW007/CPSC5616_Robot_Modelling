@@ -23,6 +23,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [R,C] = size(dataset);
+index = randperm(R);
+dataset = dataset(index, :);
 fprintf("R:%d\n",R);
 
 TRAIN = 1:(0.6*R);
