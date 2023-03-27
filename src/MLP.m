@@ -8,7 +8,7 @@ file_1 = "Dataset_with_6 inputs and 2 Outputs.xlsx";
 file_2 = "Dataset_5000.xlsx";
 file_3 = "Dataset_300000.xlsx";
 
-file = file_1;
+file = file_2;
 if (file==file_1)
     dataset = readmatrix(file_1);
 elseif(file == file_2)
@@ -105,7 +105,8 @@ for r = TRAIN
         y2(n) = 1/(1+exp(-net2(n))); % Sigmoid function
     end
 
-    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    %     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
@@ -210,7 +211,8 @@ for r = VALIDATION
         y2(n) = 1/(1+exp(-net2(n))); % Sigmoid function
     end
 
-    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    %     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
@@ -315,7 +317,8 @@ for r = TEST
         y2(n) = 1/(1+exp(-net2(n))); % Sigmoid function
     end
 
-    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    %     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
