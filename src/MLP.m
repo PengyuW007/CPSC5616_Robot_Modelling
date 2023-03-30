@@ -56,6 +56,8 @@ w2 = reshape(w2_1d,[(M+1),N]);
 w1_epoch = zeros(R,(L+1)*M);
 w2_epoch = zeros(R,(M+1)*N);
 
+y2_epoch = zeros(R,N);
+Y_epoch = zeros(R,N);
 Error = zeros(R,2);
 
 for r = TRAIN
@@ -68,6 +70,7 @@ for r = TRAIN
     for i = 1:N
         Y_(i) = dataset(r,L+1+i); % Output value, Y hat
     end
+    Y_epoch(r,:) = Y_;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,9 +107,10 @@ for r = TRAIN
         net2(n) = netCurr + BIAS*w2(M+1,n);
         y2(n) = 1/(1+exp(-net2(n))); % Sigmoid function
     end
+    y2_epoch(r,:) = y2;
 
-    %     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-    E = Y_ - y2;
+    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    %     E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
@@ -174,7 +178,7 @@ for r = VALIDATION
     for i = 1:N
         Y_(i) = dataset(r,L+1+i); % Output value, Y hat
     end
-
+    Y_epoch(r,:) = Y_;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%% Feed- Forward %%%%%%%%%%%
@@ -210,9 +214,10 @@ for r = VALIDATION
         net2(n) = netCurr + BIAS*w2(M+1,n);
         y2(n) = 1/(1+exp(-net2(n))); % Sigmoid function
     end
+    y2_epoch(r,:) = y2;
 
-    %     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-    E = Y_ - y2;
+    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    %     E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
@@ -280,6 +285,7 @@ for r = TEST
     for i = 1:N
         Y_(i) = dataset(r,L+1+i); % Output value, Y hat
     end
+    Y_epoch(r,:) = Y_;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -316,9 +322,10 @@ for r = TEST
         net2(n) = netCurr + BIAS*w2(M+1,n);
         y2(n) = 1/(1+exp(-net2(n))); % Sigmoid function
     end
+    y2_epoch(r,:) = y2;
 
-    %     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-    E = Y_ - y2;
+    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    %     E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
@@ -371,7 +378,7 @@ end % end Test
 %%%%%%%%%%%%%%%%%%% END TESTING %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-plot(Error);
+plot(Error(:,1));
 xlabel("Iteration");
 ylabel("Error cost value");
 
@@ -384,5 +391,10 @@ subplot(1,2,2);
 plot(w2_epoch);
 xlabel("Iteration");
 ylabel("w2 Weights");
+
+figure;
+plot(y2_epoch(:,1));
+hold on;
+plot(Y_epoch(:,1));
 
 toc;
