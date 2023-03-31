@@ -33,13 +33,6 @@ TEST = (0.8*R+1):R;
 
 IN= 6; % 6 inputs
 OUT = 2; % 2 outputs
-NEURONS = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
-
-BIAS = 1;
-ETA = 0.25; % 0.1<ETA<0.4
-
-[w1,w1_1d] = weights(IN,NEURONS);
-[w2,w2_1d] = weights(NEURONS,OUT);
 
 % w1_epoch = zeros(R,(IN+1)*NEURONS);
 % w2_epoch = zeros(R,(NEURONS+1)*OUT);
@@ -53,12 +46,28 @@ Y_epoch = pre_dataset(:,C-1:C);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%% TRAINING %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+NEURONS = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
+
+BIAS = 1;
+ETA = 0.2; % 0.1<ETA<0.4
+
+[w1,w1_1d] = weights(IN,NEURONS);
+[w2,w2_1d] = weights(NEURONS,OUT);
+
 [Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,TRAIN,IN,NEURONS,OUT,BIAS,ETA,w1,w2);
 multiplots(Error,TRAIN,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%% VALIDATION %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+NEURONS = 2/3*IN+OUT; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
+
+BIAS = 1;
+ETA = 0.25; % 0.1<ETA<0.4
+
+[w1,w1_1d] = weights(IN,NEURONS);
+[w2,w2_1d] = weights(NEURONS,OUT);
+
 [Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,VALIDATION,IN,NEURONS,OUT,BIAS,ETA,w1,w2);
 multiplots(Error,VALIDATION,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
 
