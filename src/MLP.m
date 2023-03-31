@@ -41,28 +41,40 @@ ETA = 0.25; % 0.1<ETA<0.4
 [w1,w1_1d] = weights(IN,NEURONS);
 [w2,w2_1d] = weights(NEURONS,OUT);
 
-w1_epoch = zeros(R,(IN+1)*NEURONS);
-w2_epoch = zeros(R,(NEURONS+1)*OUT);
-
-y2_epoch = zeros(R,OUT);
+% w1_epoch = zeros(R,(IN+1)*NEURONS);
+% w2_epoch = zeros(R,(NEURONS+1)*OUT);
+%
+% y2_epoch = zeros(R,OUT);
 
 Y_epoch = pre_dataset(:,C-1:C);
 
-Error = zeros(R,2);
-
-bp(dataset,IN,NEURONS,OUT,BIAS,ETA,w1,w2);
+% Error = zeros(R,2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%% TRAINING %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,TRAIN,IN,NEURONS,OUT,BIAS,ETA,w1,w2);
+multiplots(Error,TRAIN,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% VALIDATION %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,VALIDATION,IN,NEURONS,OUT,BIAS,ETA,w1,w2);
+multiplots(Error,VALIDATION,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% TESTING %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,TEST,IN,NEURONS,OUT,BIAS,ETA,w1,w2);
+multiplots(Error,TEST,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
 
 toc;
 
-function bp(dataset,row,L,M,N,bias,eta,w1,w2)
+function [Error,y2_epoch,w1_epoch,w2_epoch]=bp(dataset,row,L,M,N,bias,eta,w1,w2)
 for r = row
     x = dataset(r,1:L); % input value, x
 
-    Y_ = dataset(r,C-1:C); % Output value, Y hat
+    Y_ = dataset(r,L+2:L+1+N); % Output value, Y hat
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -96,24 +108,85 @@ for r = row
         for m = 1:M
             netCurr = netCurr+y1(m)*w2(m,n);
         end
-        net2(n) = netCurr + BIAS*w2(M+1,n);
+        net2(n) = netCurr + bias*w2(M+1,n);
         y2(n) = 1/(1+exp(-net2(n))); % Sigmoid function
     end
     y2_epoch(r,:) = y2;
 
-    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+    len = length(row);
+    E = (0.5/(0.7*len))*(Y_ - y2).^2; % Error cost function
     Error(r,:) = E;
 
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%% Feed- Backward %%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Deltas %
+    % Output unit
+    delta_out = y2.*(1-y2).*(Y_ - y2);
+
+    % Hidden unit
+    delta_hid = zeros(M,1);
+    for n = 1:N
+        for m = 1:M
+            delta_hid(m) = y1(m)*(1 - y1(m))*w2(m,n)*delta_out(n);
+        end
+    end
+
+    % Updated weights %
+    % Output - Hidden
+    for n = 1:N
+        for m = 1:M
+            w2(m,n) = eta*delta_out(n)*y1(m) + w2(m,n);
+        end
+        w2(M+1,n) = eta*delta_out(n)*bias + w2(M+1,n);
+    end
+
+    % Hidden - Input
+    for m = 1:M
+        for l = 1:L
+            w1(l,m) = eta*delta_hid(m)*x(l) + w1(l,m);
+        end
+        w1(L+1,m) = eta*delta_hid(m)*bias + w1(L+1,m);
+    end
+
+    % add w1, w2 weights into epoch array
+    w1_1d = reshape(w1,[1,(L+1)*M]);
+    w2_1d = reshape(w2,[1,(M+1)*N]);
+
+    w1_epoch(r,:) = w1_1d;
+    w2_epoch(r,:) = w2_1d;
 end
 
 end % end BP
 
-
-
 function [w,w_1d] = weights(layer1,layer2)
-    low = -1/sqrt(layer1);
-    up = 1/sqrt(layer1);
+low = -1/sqrt(layer1);
+up = 1/sqrt(layer1);
 
-    w_1d = low + (up-low).*rand((layer1+1)*layer2,1);
-    w = reshape(w_1d,[layer1+1,layer2]);
+w_1d = low + (up-low).*rand((layer1+1)*layer2,1);
+w = reshape(w_1d,[layer1+1,layer2]);
+end
+
+function multiplots(Error,row,w1_epoch,w2_epoch,y2_epoch,Y_epoch)
+figure;
+plot(Error);
+xlabel("Iteration");
+ylabel("Error cost value");
+
+figure;
+subplot(1,2,1);
+plot(w1_epoch);
+xlabel("Iteration");
+ylabel("w1 Weights");
+subplot(1,2,2);
+plot(w2_epoch);
+xlabel("Iteration");
+ylabel("w2 Weights");
+
+figure;
+plot(y2_epoch);
+hold on;
+plot(Y_epoch(row,:));
 end
