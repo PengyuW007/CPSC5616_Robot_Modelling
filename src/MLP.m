@@ -38,6 +38,16 @@ BIAS = 1;
 ETA = 0.25; % 0.1<ETA<0.4
 
 [w1,w1_1d] = weights(L,M);
+[w2,w2_1d] = weights(M,N);
+
+w1_epoch = zeros(R,(L+1)*M);
+w2_epoch = zeros(R,(M+1)*N);
+
+y2_epoch = zeros(R,N);
+
+Y_epoch = pre_dataset(:,C-1:C);
+
+Error = zeros(R,2);
 
 toc;
 
