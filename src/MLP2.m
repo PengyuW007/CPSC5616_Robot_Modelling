@@ -403,5 +403,7 @@ figure;
 plot(y2_epoch);
 hold on;
 plot(Y_epoch);
+xlabel("Iterations");
+ylabel("Y value");
 
 toc;

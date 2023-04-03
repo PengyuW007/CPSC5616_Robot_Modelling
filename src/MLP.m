@@ -54,8 +54,8 @@ ETA = 0.2; % 0.1<ETA<0.4
 [w1,w1_1d] = weights(IN,neurons);
 [w2,w2_1d] = weights(neurons,OUT);
 
-[Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,TRAIN,IN,neurons,OUT,BIAS,ETA,w1,w2);
-multiplots(Error,TRAIN,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
+[Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,1:R,IN,neurons,OUT,BIAS,ETA,w1,w2);
+multiplots(Error,1:R,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%% VALIDATION %%%%%%%%%%%%%%%%%%%%
