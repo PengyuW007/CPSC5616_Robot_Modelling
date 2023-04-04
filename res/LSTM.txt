@@ -1,0 +1,8 @@
+1. Backpropogating an LSTM: A Numerical Example
+https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
+
+2. A numerical example of LSTMs
+https://statisticalinterference.wordpress.com/2017/06/01/lstms-in-even-more-excruciating-detail/
+
+3. (video)Long Short Term Memory(LSTM) explained with Example
+https://www.youtube.com/watch?v=JySTgE5w4o4&t=300s
