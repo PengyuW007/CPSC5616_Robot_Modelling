@@ -3,11 +3,6 @@ close all;
 clear;
 
 tic;
-clc;
-close all;
-clear;
-
-tic;
 
 file_1 = "Dataset_with_6 inputs and 2 Outputs.xlsx";
 file_2 = "Dataset_5000.xlsx";
@@ -46,42 +41,79 @@ Y_epoch = pre_dataset(:,C-1:C);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 neurons = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 
-BIAS = 1;
-ETA = 0.2; % 0.1<ETA<0.4
+Bias = 1;
+Eta = 0.2; % 0.1<ETA<0.4
 
-lstm(dataset,TRAIN,IN,neurons,OUT,BIAS,ETA);
+lstm(dataset,TRAIN,IN,OUT,Bias,Eta);
 
 toc;
 
-function lstm(dataset,row,L,M,N,bias,eta)
-[wForget,wForget_1d] = weights(L);
-h = zeros(1,L);
+function lstm(dataset,row,L,N,bias,eta)
+
+w = weights(2,4);
+wForget = w(1,:);
+wInput = w(2,:);
+wCell = w(3,:);
+wOutput = w(4,:);
+wY_ = w(5,:);
 
 for r = row
     x = dataset(r,1:L); % input value, x
-
     Y_ = dataset(r,L+2:L+1+N); % Output value, Y hat
 
+    h = zeros(1,L+1); % hidden state, start from h0 = 0
+    c = zeros(1,L+1);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%% Feed- Forward %%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    %%%%%%%%%%%%%%%%%%
-    % Input - Hidden %
-    %%%%%%%%%%%%%%%%%%
+    % Input Gate %
+    neti = wInput(1)*x(index) + wInput(2)*h(index) + wInput(3)*bias;
+    i = 1/(1+exp(-neti));
 
+    netc = wCell(1)*x(index) + wCell(2)*h(index) + wCell(3)*bias;
+    c_ = exp(2*netc)-1/(exp(2*netc)+1);
 
+    % Forget Gate %
+    netf = wForget(1)*x(index)+wForget(2)*h(index)+wForget(3)*bias;
+    f = 1/(1+exp(-netf));
+
+    % Memory Cell %
+    c(index+1) = i*c_ + f*c(index);
+
+    % Output Gate %
+    neto = wOutput(1)*x(index)+wOutput(2)*h(index)+wOutput(3)*bias;
+    o = 1/(1+exp(-neto));
+
+    h(index+1) = o*tanh(c(index+1));
+
+    y = (wY_(1)+wY_(2))*h(L+1)+wY_(3)*bias;
 
 end
 end
 
-function [w,w_1d] = weights(input)
-state = 5;
+function w = Ws(input)
+State = 5;
 low = -1/sqrt(input);
 up = 1/sqrt(input);
 
-w_1d = low + (up-low).*rand((input+1)*state,1);
-w = reshape(w_1d,[state,input+1]);
+w_1d = low + (up-low).*rand(input*State,1);
+w = reshape(w_1d,[State,input]);
+end
+
+function w = Us(input)
+low = -1/sqrt(input);
+up = 1/sqrt(input);
+
+w = low + (up-low).*rand(1,input);
+end
+
+function w = weights(layer1,layer2)
+low = -1/sqrt(layer1);
+up = 1/sqrt(layer1);
+
+w_1d = low + (up-low).*rand((layer1+1)*(layer2+1),1);
+w = reshape(w_1d,[layer2+1,layer1+1]);
 end
