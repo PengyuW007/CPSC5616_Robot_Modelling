@@ -113,7 +113,7 @@ for r = row
         y(n) = y+bias*wy(M+1,n);
     end
     
-    E = (0.5/(ro))*(Y_ - y).^2; % Error cost function
+    E = (0.5/(ro)).*(Y_ - y).^2; % Error cost function
     Error(r,:) = E;
 end
 end
