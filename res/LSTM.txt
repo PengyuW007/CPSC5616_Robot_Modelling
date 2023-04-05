@@ -6,3 +6,6 @@ https://statisticalinterference.wordpress.com/2017/06/01/lstms-in-even-more-excr
 
 3. (video)Long Short Term Memory(LSTM) explained with Example
 https://www.youtube.com/watch?v=JySTgE5w4o4&t=300s
+
+4. [ Back to Basics ] Deriving Back Propagation on simple RNN/LSTM
+https://towardsdatascience.com/back-to-basics-deriving-back-propagation-on-simple-rnn-lstm-feat-aidan-gomez-c7f286ba973d

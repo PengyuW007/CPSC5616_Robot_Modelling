@@ -42,60 +42,78 @@ Y_epoch = pre_dataset(:,C-1:C);
 neurons = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 
 Bias = 1;
-Eta = 0.2; % 0.1<ETA<0.4
 
-lstm(dataset,TRAIN,IN,OUT,Bias,Eta);
+lstm(dataset,TRAIN,IN,neurons,OUT,Bias);
 
 toc;
 
-function lstm(dataset,row,L,N,bias,eta)
+function lstm(dataset,row,L,M,N,bias)
+W = Ws(L);
+wub = W_ubs(L);
 
-w = weights(2,4);
-wForget = w(1,:);
-wInput = w(2,:);
-wCell = w(3,:);
-wOutput = w(4,:);
-wY_ = w(5,:);
+[~,ro] = size(row);
+h = zeros(ro+1,M); % hidden state, start from h0 = 0
+c = zeros(ro+1,M);
 
 for r = row
     x = dataset(r,1:L); % input value, x
     Y_ = dataset(r,L+2:L+1+N); % Output value, Y hat
 
-    h = zeros(1,L+1); % hidden state, start from h0 = 0
-    c = zeros(1,L+1);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%% Feed- Forward %%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    for m = 1:M
+        hCurr = h(r,m);
+        xs = [x hCurr bias];
 
-    % Input Gate %
-    neti = wInput(1)*x(index) + wInput(2)*h(index) + wInput(3)*bias;
-    i = 1/(1+exp(-neti));
+        % Input Gate 1 %
+        wi = W(1,:);
+        wubi = wub(1,:);
+        w = [wi wubi];
+        neti = sum(w.*xs);
+        i = sigmoid(neti);
+        % Input Gate 2 %
+        wc = W(2,:);
+        wubc = wub(2,:);
+        w = [wc wubc];
+        netc = sum(w.*xs);
+        c_ = tanh(netc);
 
-    netc = wCell(1)*x(index) + wCell(2)*h(index) + wCell(3)*bias;
-    c_ = exp(2*netc)-1/(exp(2*netc)+1);
+        % Forget Gate %
+        wf = W(3,:);
+        wubf = wub(3,:);
+        w = [wf wubf];
+        netf = sum(w.*xs);
+        f = sigmoid(netf);
 
-    % Forget Gate %
-    netf = wForget(1)*x(index)+wForget(2)*h(index)+wForget(3)*bias;
-    f = 1/(1+exp(-netf));
+        % Output Gate %
+        wo =W(4,:);
+        wubo = wub(4,:);
+        w = [wo wubo];
+        neto = sum(w.*xs);
+        o = sigmoid(neto);
 
-    % Memory Cell %
-    c(index+1) = i*c_ + f*c(index);
+        % Memory Cell/ Cell State %
+        c(r+1,m) = i.*c_ + f.*c(r,m);
 
-    % Output Gate %
-    neto = wOutput(1)*x(index)+wOutput(2)*h(index)+wOutput(3)*bias;
-    o = 1/(1+exp(-neto));
-
-    h(index+1) = o*tanh(c(index+1));
-
-    y = (wY_(1)+wY_(2))*h(L+1)+wY_(3)*bias;
-
+        % Hidden Layer/ State %
+        h(r+1,m) = o*tanh(c(r+1,m)); 
+    end
 end
+end
+
+function y = sigmoid(net)
+y = 1/(1+exp(-net));
+end
+
+function y = tanh(net)
+y = (exp(2*net)-1)/(exp(2*net)+1);
 end
 
 function w = Ws(input)
-State = 5;
+State = 4;
 low = -1/sqrt(input);
 up = 1/sqrt(input);
 
@@ -103,17 +121,19 @@ w_1d = low + (up-low).*rand(input*State,1);
 w = reshape(w_1d,[State,input]);
 end
 
-function w = Us(input)
+function w = W_ubs(input)
+state = 4;
 low = -1/sqrt(input);
 up = 1/sqrt(input);
 
-w = low + (up-low).*rand(1,input);
+w_1d = low + (up-low).*rand(state*2,1);
+w = reshape(w_1d,[state,2]);
 end
 
-function w = weights(layer1,layer2)
+function w = Weights(layer1,layer2)
 low = -1/sqrt(layer1);
 up = 1/sqrt(layer1);
 
-w_1d = low + (up-low).*rand((layer1+1)*(layer2+1),1);
-w = reshape(w_1d,[layer2+1,layer1+1]);
+w_1d = low + (up-low).*rand((layer1)*(layer2),1);
+w = reshape(w_1d,[layer2,layer1]);
 end
