@@ -43,11 +43,12 @@ neurons = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 
 Bias = 1;
 
-lstm(dataset,TRAIN,IN,neurons,OUT,Bias);
+E = lstm(dataset,TRAIN,IN,neurons,OUT,Bias);
 
+plot(E);
 toc;
 
-function lstm(dataset,row,L,M,N,bias)
+function Error =lstm(dataset,row,L,M,N,bias)
 W = Ws(L);
 wub = W_ubs(L);
 wy = Weights(M+1,N);
@@ -55,7 +56,7 @@ wy = Weights(M+1,N);
 [~,ro] = size(row);
 h = zeros(ro+1,M); % hidden state, start from h0 = 0
 c = zeros(ro+1,M);
-
+Error = zeros(ro,2);
 for r = row
     x = dataset(r,1:L); % input value, x
     Y_ = dataset(r,L+2:L+1+N); % Output value, Y hat
@@ -111,7 +112,9 @@ for r = row
         end
         y(n) = y+bias*wy(M+1,n);
     end
-
+    
+    E = (0.5/(ro))*(Y_ - y).^2; % Error cost function
+    Error(r,:) = E;
 end
 end
 
