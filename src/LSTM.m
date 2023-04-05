@@ -50,6 +50,7 @@ toc;
 function lstm(dataset,row,L,M,N,bias)
 W = Ws(L);
 wub = W_ubs(L);
+wy = Weights(M+1,N);
 
 [~,ro] = size(row);
 h = zeros(ro+1,M); % hidden state, start from h0 = 0
@@ -96,11 +97,21 @@ for r = row
         o = sigmoid(neto);
 
         % Memory Cell/ Cell State %
-        c(r+1,m) = i.*c_ + f.*c(r,m);
+        cNext = i.*c_ + f.*c(r,m);
+        c(r+1,m) = cNext;
 
         % Hidden Layer/ State %
-        h(r+1,m) = o*tanh(c(r+1,m)); 
+        hNext = o*tanh(cNext);
+        h(r+1,m) = hNext;
     end
+    
+    for n=1:N
+        for m = 1:M
+            y = wy(m,n)*h(r+1,m);
+        end
+        y(n) = y+bias*wy(M+1,n);
+    end
+
 end
 end
 
@@ -135,5 +146,5 @@ low = -1/sqrt(layer1);
 up = 1/sqrt(layer1);
 
 w_1d = low + (up-low).*rand((layer1)*(layer2),1);
-w = reshape(w_1d,[layer2,layer1]);
+w = reshape(w_1d,[layer1,layer2]);
 end
