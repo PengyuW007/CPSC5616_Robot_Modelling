@@ -105,16 +105,22 @@ for r = row
         hNext = o*tanh(cNext);
         h(r+1,m) = hNext;
     end
-    
+
     for n=1:N
         for m = 1:M
             y = wy(m,n)*h(r+1,m);
         end
         y(n) = y+bias*wy(M+1,n);
     end
-    
+
     E = (0.5/(ro)).*(Y_ - y).^2; % Error cost function
     Error(r,:) = E;
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%% Feed- Backward %%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
 end
 
