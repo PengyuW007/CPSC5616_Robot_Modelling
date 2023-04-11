@@ -42,7 +42,7 @@ N = 2; % 2 outputs
 M = L-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 
 BIAS = 1;
-ETA = 0.25; % 0.1<ETA<0.4
+ETA = 0.2; % 0.1<ETA<0.4
 
 low1 = -1/sqrt(L);
 up1 = 1/sqrt(L);
@@ -175,6 +175,24 @@ end % end Training
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%% VALIDATION %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+M = L+4; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
+
+BIAS = 1;
+ETA = 0.0001; % 0.1<ETA<0.4
+
+low1 = -1/sqrt(L);
+up1 = 1/sqrt(L);
+w1_1d = low1 +(up1-low1).*rand((L+1)*M,1);
+w1 = reshape(w1_1d,[L+1,M]);
+
+low2 = -1/sqrt(M);
+up2 = 1/sqrt(M);
+w2_1d = low2 + (up2-low2).*rand((M+1)*N,1);
+w2 = reshape(w2_1d,[(M+1),N]);
+
+% w1_epoch = zeros(R,(L+1)*M);
+% w2_epoch = zeros(R,(M+1)*N);
+
 for r = VALIDATION
     x = zeros(1,L);
     for i = 1:L
@@ -223,8 +241,8 @@ for r = VALIDATION
     end
     y2_epoch(r,:) = y2;
 
-%     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-        E = Y_ - y2;
+    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+%         E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
@@ -331,8 +349,8 @@ for r = TEST
     end
     y2_epoch(r,:) = y2;
 
-%     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-        E = Y_ - y2;
+    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+%         E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end

@@ -8,7 +8,7 @@ file_1 = "Dataset_with_6 inputs and 2 Outputs.xlsx";
 file_2 = "Dataset_5000.xlsx";
 file_3 = "Dataset_300000.xlsx";
 
-file = file_2;
+file = file_3;
 if (file==file_1)
     dataset = readmatrix(file_1);
 elseif(file == file_2)
@@ -40,15 +40,17 @@ Y_epoch = pre_dataset(:,C-1:C);
 %%%%%%%%%%%%%%%%%%%%% TRAINING %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 neurons = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
-
+Eta = 0.0001;
 Bias = 1;
 
-E = lstm(dataset,TRAIN,IN,neurons,OUT,Bias);
+E = lstm(dataset,TRAIN,IN,neurons,OUT,Bias,Eta);
 
 plot(E);
+xlabel("Iteration");
+ylabel("Error cost value")
 toc;
 
-function Error =lstm(dataset,row,L,M,N,bias)
+function Error =lstm(dataset,row,L,M,N,bias,Eta)
 W = Ws(L);
 wub = W_ubs(L);
 wy = Weights(M+1,N);
@@ -121,6 +123,12 @@ for r = row
     %%%%%%%%%% Feed- Backward %%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % gradient of the error to the output %
+    delta_out = (Y_-y).*(-wy).*tanh(c(r+1,:));
+
+
+    
 end
 end
 

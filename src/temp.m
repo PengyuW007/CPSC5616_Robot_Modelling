@@ -15,20 +15,11 @@ tic;
 %
 % net = t.*w;
 % s = sum(net);
-x = [1 2 3 4 5 6];
-bias = -1;
-L  = 6;
-wx = Ws(L);
-wb = W_ubs(L);
 
-wi = wx(1,:);
-wubi = wb(1,:);
-hCurr = 0;
-a = [x hCurr bias];
-w = [wi wubi];
-net = a.*w;
-s = sum(net);
-
+w1 = [1 2 3 ];
+w2 = [2;1];
+w = w1.*w2;
+display(w);
 
 toc;
 
