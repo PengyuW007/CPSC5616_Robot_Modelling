@@ -1,3 +1,5 @@
+http://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
 1. Backpropogating an LSTM: A Numerical Example
 https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
 
