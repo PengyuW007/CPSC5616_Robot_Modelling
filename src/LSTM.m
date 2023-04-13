@@ -8,7 +8,7 @@ file_1 = "Dataset_with_6 inputs and 2 Outputs.xlsx";
 file_2 = "Dataset_5000.xlsx";
 file_3 = "Dataset_300000.xlsx";
 
-file = file_3;
+file = file_2;
 if (file==file_1)
     dataset = readmatrix(file_1);
 elseif(file == file_2)
@@ -123,12 +123,34 @@ for r = row
     %%%%%%%%%% Feed- Backward %%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    delta_ot = (Y_-y).*(-wy).*(tanh(c(r,:)));
 
-    % gradient of the error to the output %
-    delta_out = (Y_-y).*(-wy).*tanh(c(r+1,:));
+    delta_ct = (Y_-y).*(-wy).*o.*(1-tanh(c(r+1,:)).^2); % gradient of the error to the memory cell
 
+    delta_it = delta_ct.*c_; % input gate
 
+    delta_ft = delta_ct.*c(r,m); % forget gate
+
+    delta_at = delta_ct.*i; % new memory state
+
+%     delta_ct_1 = delta_ct.*f; % previous cell state
     
+    % NET %
+    delta_at_ = delta_at.*(1-tanh(netc).^2);
+
+    delta_it_ = delta_it.*i.*(1-i);
+
+    delta_ft_ = delta_ft.*f.*(1-f);
+
+    delta_ot_ = delta_ot.*o.*(1-o);
+
+    delta_zt = [delta_at_;delta_it_;delta_ft_;delta_ot_];
+    ws = [W wub];
+
+%     delta_w = ws.*delta_zt;
+
+%     ws = ws - Eta.*delta_w;
+
 end
 end
 
