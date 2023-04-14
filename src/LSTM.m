@@ -69,7 +69,7 @@ wy = Weights(M+1,N);
 h = zeros(ro+1,M); % hidden state, start from h0 = 0
 c = zeros(ro+1,M);
 
-w_epoch = zeros(ro,L*(L+N));
+w_epoch = zeros(ro,(M+1)*(L+N));
 y_epoch = zeros(ro,2);
 Error = zeros(ro,2);
 for r = row
@@ -162,13 +162,13 @@ for r = row
     delta_zt = [delta_at_ delta_it_ delta_ft_ delta_ot_];
     ws = [W wub];
     %%%%%%%%% WEIRD %%%%%%%%%
-    wTemp = Weights(N,L+N);
+    wTemp = Weights(M-3,L+N);
     ws_ = [ws; wTemp];
     %%%%%%%%% WEIRD %%%%%%%%%
     delta_w = ws_.*delta_zt;
     ws_ = ws_ - Eta.*delta_w;
 
-    ws_1d = reshape(ws_,[1,L*(L+N)]);
+    ws_1d = reshape(ws_,[1,(M+1)*(L+N)]);
     w_epoch(r,:) = ws_1d;
 end
 end

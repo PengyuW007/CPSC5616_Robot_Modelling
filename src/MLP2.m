@@ -8,7 +8,7 @@ file_1 = "Dataset_with_6 inputs and 2 Outputs.xlsx";
 file_2 = "Dataset_5000.xlsx";
 file_3 = "Dataset_300000.xlsx";
 
-file = file_2;
+file = file_3;
 if (file==file_1)
     dataset = readmatrix(file_1);
 elseif(file == file_2)
@@ -31,11 +31,6 @@ fprintf("R:%d\n",R);
 TRAIN = 1:(0.6*R);
 VALIDATION = (0.6*R+1):0.8*R;
 TEST = (0.8*R+1):R;
-% R = 327680;
-% fprintf("%d\n",R);
-% TRAIN = 1:(0.7*R);
-% VALIDATION = (0.7*R+1):R;
-% TEST = (0.85*R+1):R;
 
 L= 6; % 6 inputs
 N = 2; % 2 outputs
@@ -418,8 +413,12 @@ xlabel("Iteration");
 ylabel("w2 Weights");
 
 figure;
+subplot(2,1,1);
 plot(y2_epoch);
-hold on;
+xlabel("Iterations");
+ylabel("Predicted value");
+% hold on;
+subplot(2,1,2);
 plot(Y_epoch);
 xlabel("Iterations");
 ylabel("Y value");
