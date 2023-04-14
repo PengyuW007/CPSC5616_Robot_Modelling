@@ -8,7 +8,7 @@ file_1 = "Dataset_with_6 inputs and 2 Outputs.xlsx";
 file_2 = "Dataset_5000.xlsx";
 file_3 = "Dataset_300000.xlsx";
 
-file = file_3;
+file = file_2;
 if (file==file_1)
     dataset = readmatrix(file_1);
 elseif(file == file_2)
@@ -111,8 +111,8 @@ for r = TRAIN
     end
     y2_epoch(r,:) = y2;
 
-%     E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-        E = Y_ - y2;
+    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
+%         E = Y_ - y2;
     for i = 1:2
         Error(r,i) = E(i);
     end
@@ -295,6 +295,21 @@ end % end Validation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% TESTING %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+M = 100; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
+
+BIAS = 1;
+ETA = 0.000001; % 0.1<ETA<0.4
+
+low1 = -1/sqrt(L);
+up1 = 1/sqrt(L);
+w1_1d = low1 +(up1-low1).*rand((L+1)*M,1);
+w1 = reshape(w1_1d,[L+1,M]);
+
+low2 = -1/sqrt(M);
+up2 = 1/sqrt(M);
+w2_1d = low2 + (up2-low2).*rand((M+1)*N,1);
+w2 = reshape(w2_1d,[(M+1),N]);
+
 for r = TEST
     x = zeros(1,L);
     for i = 1:L
