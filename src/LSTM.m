@@ -43,7 +43,7 @@ neurons = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 Eta = 0.0001;
 Bias = 1;
 
-[E,w] = lstm(dataset,TRAIN,IN,neurons,OUT,Bias,Eta);
+[E,w,y] = lstm(dataset,TRAIN,IN,neurons,OUT,Bias,Eta);
 
 plot(E);
 xlabel("Iteration");
@@ -53,9 +53,14 @@ figure;
 plot(w);
 xlabel("Iteration");
 ylabel("weights value")
+
+figure;
+plot(y);
+xlabel("Iteration");
+ylabel("Output value")
 toc;
 
-function [Error,w_epoch] =lstm(dataset,row,L,M,N,bias,Eta)
+function [Error,w_epoch,y_epoch] =lstm(dataset,row,L,M,N,bias,Eta)
 W = Ws(L);
 wub = W_ubs(L);
 wy = Weights(M+1,N);
@@ -65,6 +70,7 @@ h = zeros(ro+1,M); % hidden state, start from h0 = 0
 c = zeros(ro+1,M);
 
 w_epoch = zeros(ro,L*(L+N));
+y_epoch = zeros(ro,2);
 Error = zeros(ro,2);
 for r = row
     x = dataset(r,1:L); % input value, x
@@ -122,6 +128,8 @@ for r = row
         y(n) = y+bias*wy(M+1,n);
     end
 
+    y_epoch(r,:) = y;
+
     E = (0.5/(ro)).*(Y_ - y).^2; % Error cost function
     Error(r,:) = E;
 
@@ -153,7 +161,7 @@ for r = row
 
     delta_zt = [delta_at_ delta_it_ delta_ft_ delta_ot_];
     ws = [W wub];
-    %%%%%%%%% WEIRD %%%%%%%%% 
+    %%%%%%%%% WEIRD %%%%%%%%%
     wTemp = Weights(N,L+N);
     ws_ = [ws; wTemp];
     %%%%%%%%% WEIRD %%%%%%%%%
