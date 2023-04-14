@@ -43,14 +43,19 @@ neurons = IN-1; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 Eta = 0.0001;
 Bias = 1;
 
-E = lstm(dataset,TRAIN,IN,neurons,OUT,Bias,Eta);
+[E,w] = lstm(dataset,TRAIN,IN,neurons,OUT,Bias,Eta);
 
 plot(E);
 xlabel("Iteration");
 ylabel("Error cost value")
+
+figure;
+plot(w);
+xlabel("Iteration");
+ylabel("weights value")
 toc;
 
-function Error =lstm(dataset,row,L,M,N,bias,Eta)
+function [Error,w_epoch] =lstm(dataset,row,L,M,N,bias,Eta)
 W = Ws(L);
 wub = W_ubs(L);
 wy = Weights(M+1,N);
@@ -58,6 +63,8 @@ wy = Weights(M+1,N);
 [~,ro] = size(row);
 h = zeros(ro+1,M); % hidden state, start from h0 = 0
 c = zeros(ro+1,M);
+
+w_epoch = zeros(ro,L*(L+N));
 Error = zeros(ro,2);
 for r = row
     x = dataset(r,1:L); % input value, x
@@ -133,8 +140,8 @@ for r = row
 
     delta_at = delta_ct.*i; % new memory state
 
-%     delta_ct_1 = delta_ct.*f; % previous cell state
-    
+    %     delta_ct_1 = delta_ct.*f; % previous cell state
+
     % NET %
     delta_at_ = delta_at.*(1-tanh(netc).^2);
 
@@ -144,13 +151,17 @@ for r = row
 
     delta_ot_ = delta_ot.*o.*(1-o);
 
-    delta_zt = [delta_at_;delta_it_;delta_ft_;delta_ot_];
+    delta_zt = [delta_at_ delta_it_ delta_ft_ delta_ot_];
     ws = [W wub];
+    %%%%%%%%% WEIRD %%%%%%%%% 
+    wTemp = Weights(N,L+N);
+    ws_ = [ws; wTemp];
+    %%%%%%%%% WEIRD %%%%%%%%%
+    delta_w = ws_.*delta_zt;
+    ws_ = ws_ - Eta.*delta_w;
 
-%     delta_w = ws.*delta_zt;
-
-%     ws = ws - Eta.*delta_w;
-
+    ws_1d = reshape(ws_,[1,L*(L+N)]);
+    w_epoch(r,:) = ws_1d;
 end
 end
 
