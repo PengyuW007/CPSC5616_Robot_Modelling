@@ -61,22 +61,22 @@ multiplots(Error,1:R,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%% VALIDATION %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% neurons = 2/3*IN+OUT; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
+neurons = 2/3*IN+OUT; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 
-% BIAS = 1;
-% ETA = 0.00001; % 0.1<ETA<0.4
-% 
-% [w1,w1_1d] = weights(IN,neurons);
-% [w2,w2_1d] = weights(neurons,OUT);
-% 
-% [Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,VALIDATION,IN,neurons,OUT,BIAS,ETA,w1,w2);
-% multiplots(Error,VALIDATION,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
-% 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %%%%%%%%%%%%%%%%%%%%% TESTING %%%%%%%%%%%%%%%%%%%%%%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,TEST,IN,neurons,OUT,BIAS,ETA,w1,w2);
-% multiplots(Error,TEST,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
+BIAS = 1;
+ETA = 0.00001; % 0.1<ETA<0.4
+
+[w1,w1_1d] = weights(IN,neurons);
+[w2,w2_1d] = weights(neurons,OUT);
+
+[Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,VALIDATION,IN,neurons,OUT,BIAS,ETA,w1,w2);
+multiplots(Error,VALIDATION,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% TESTING %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[Error,y2_epoch,w1_epoch,w2_epoch] = bp(dataset,TEST,IN,neurons,OUT,BIAS,ETA,w1,w2);
+multiplots(Error,TEST,w1_epoch,w2_epoch,y2_epoch,Y_epoch);
 
 toc;
 
