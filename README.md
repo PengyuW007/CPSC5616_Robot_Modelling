@@ -23,11 +23,12 @@ Please run MLP.m and LSTM.m these two files, which shows the results of MLP and 
 ### Documents
 There are 3 files for input and output, for training convenience, I separate them into 3. Please run the third one
 " Dataset_with_6 inputs and 2 Outputs.xlsx", which contains the whole dataset.
-    1. Dataset_5000.xlsx: This file contains 5000 rows of data.
     
-    2. Dataset_300000.xlsx:This file contains 349356 rows of data.
+1. Dataset_5000.xlsx: This file contains 5000 rows of data.
     
-    3. Dataset_with_6 inputs and 2 Outputs.xlsx: This file contains 698710 rows of data. And this is the original file.
+2. Dataset_300000.xlsx:This file contains 349356 rows of data.
+    
+3. Dataset_with_6 inputs and 2 Outputs.xlsx: This file contains 698710 rows of data. And this is the original file.
 
 ### Additional notes
 These two files run over 698710 rows of data. Both of them take 40s to finish their running.
