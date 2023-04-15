@@ -75,6 +75,12 @@ Y_epoch = pre_dataset(:,C-1:C);
 
 Error = zeros(R,2);
 
+errorFile = "MLPError.xlsx";
+weightsFile = "MLPweightsData.xlsx";
+
+writematrix(w1_1d,weightsFile,"Sheet",1);
+writematrix(w2_1d,weightsFile,"Sheet",2);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%% TRAINING %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -296,7 +302,7 @@ end % end Validation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% TESTING %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-M = 100; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
+M = L+4; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 
 BIAS = 1;
 ETA = 0.000001; % 0.1<ETA<0.4
@@ -405,6 +411,9 @@ end % end Test
 %%%%%%%%%%%%%%%%%%% END TESTING %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%
+% PLOTS %
+%%%%%%%%%
 plot(Error);
 xlabel("Iteration");
 ylabel("Error cost value");
@@ -429,5 +438,13 @@ subplot(2,1,2);
 plot(Y_epoch);
 xlabel("Iterations");
 ylabel("Y value");
+
+%%%%%%%%%%
+% SHEETS %
+%%%%%%%%%%
+writematrix(Error,errorFile,'Sheet',1);
+
+% writematrix(w1_epoch,weightsFile,'Sheet',3);
+% writematrix(w2_epoch,weightsFile,'Sheet',4);
 
 toc;

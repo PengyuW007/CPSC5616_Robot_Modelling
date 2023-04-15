@@ -6,7 +6,7 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 ### Group Member
 1. [Wang, Pengyu](https://github.com/PengyuW007), 0425157
 2. [Zhang, Haokun](https://github.com/haokunzhang), 0424660
-3. [Zhu, Ziping](https://github.com/0v0-QAQ), 0422426
+3. [Zhu, Ziping](https://github.com/0v0-QAQ) or [Zhu, Ziping](https://github.com/zzhu4LU), 0422426
 
 ### [Repository](https://github.com/PengyuW007/CPSC5616_Robot_Modelling.git) OR	
 
@@ -30,7 +30,14 @@ There are 3 files for input and output, for training convenience, I separate the
     
 3. Dataset_with_6 inputs and 2 Outputs.xlsx: This file contains 698710 rows of data. And this is the original file.
 
+There are 6 files to store the values of Error, weights and Output values
+
+1. MLPError.xlsx AND LSTMError
+
+2. MLPWeightsData.xlsx AND LSTMWeightsData.xlsx
+
+3. MLPOutputData.xlsx AND LSTMOutputData.xlsx
+
 ### Additional notes
-These two files run over 698710 rows of data. Both of them take 40s to finish their running.
-However, all the graphs and plots show up would take approximately **1MIN 30S**. I think it depends on 
-your CPU and GPU. So, these two files would take a while to run, just **BE PATIENT**! Much appreciate for your patience!
+These two files run over 698710 rows of data. Both of them take approximately **1MIN 40S = 100S**
+when all the graphs and plots show up. It depends on the performance of your CPU and Memory. So, these two files would take a while to run, just **BE PATIENT**! Much appreciate for your patience!
