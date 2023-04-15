@@ -1,3 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% COURSE: CPSC 5616
+% MEMBER: 
+%       Pengyu Wang, 0425157
+%       Haokun Zhang, 0424660
+%       Ziping Zhu, 0422426
+% PROJECT: Robot Modelling by Using LSTM
+%
+% REMARKS: Prediction of robot motion
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 clc;
 close all;
 clear;
