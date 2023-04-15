@@ -32,7 +32,7 @@ There are 3 files for input and output, for training convenience, I separate the
 
 There are 6 files to store the values of Error, weights and Output values
 
-1. MLPError.xlsx AND LSTMError
+1. MLPError.xlsx AND LSTMError.xlsx
 
 2. MLPWeightsData.xlsx AND LSTMWeightsData.xlsx
 
