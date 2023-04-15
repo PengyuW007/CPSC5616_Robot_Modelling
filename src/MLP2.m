@@ -8,7 +8,7 @@ file_1 = "Dataset_with_6 inputs and 2 Outputs.xlsx";
 file_2 = "Dataset_5000.xlsx";
 file_3 = "Dataset_300000.xlsx";
 
-file = file_2;
+file = file_1;
 if (file==file_1)
     dataset = readmatrix(file_1);
 elseif(file == file_2)
@@ -49,8 +49,11 @@ up2 = 1/sqrt(M);
 w2_1d = low2 + (up2-low2).*rand((M+1)*N,1);
 w2 = reshape(w2_1d,[(M+1),N]);
 
+% maxSize = intmax("int16");
 w1_epoch = zeros(R,(L+1)*M);
 w2_epoch = zeros(R,(M+1)*N);
+% w1_epoch = zeros(R,1000);
+% w2_epoch = zeros(R,1000);
 
 y2_epoch = zeros(R,N);
 % Y_epoch = zeros(R,N);
@@ -63,16 +66,10 @@ Error = zeros(R,2);
 %%%%%%%%%%%%%%%%%%%%% TRAINING %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for r = TRAIN
-    x = zeros(1,L);
-    for i = 1:L
-        x(i) = dataset(r,i); % input value, x
-    end
 
-    Y_ = zeros(1,N);
-    for i = 1:N
-        Y_(i) = dataset(r,L+1+i); % Output value, Y hat
-    end
-%     Y_epoch(r,:) = Y_;
+    x = dataset(r,1:L); % input value, x
+
+    Y_ = dataset(r,L+2:L+1+N); % Output value, Y hat
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,11 +108,9 @@ for r = TRAIN
     end
     y2_epoch(r,:) = y2;
 
-    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-%         E = Y_ - y2;
-    for i = 1:2
-        Error(r,i) = E(i);
-    end
+    len = length(TRAIN);
+    E = (0.5/len)*(Y_ - y2).^2; % Error cost function
+    Error(r,:) = E;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -154,6 +149,7 @@ for r = TRAIN
     % add w1, w2 weights into epoch array
     w1_1d = reshape(w1,[1,(L+1)*M]);
     w2_1d = reshape(w2,[1,(M+1)*N]);
+
     for i=1:(L+1)*M
         w1_epoch(r,i) = w1_1d(i);
     end
@@ -170,10 +166,10 @@ end % end Training
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%% VALIDATION %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-M = L+4; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
+M = 2/3*L+N; % % neurons, Range = 1 to L, Best = 2/3*L+N or L-1
 
 BIAS = 1;
-ETA = 0.0001; % 0.1<ETA<0.4
+ETA = 0.000001; % 0.1<ETA<0.4
 
 low1 = -1/sqrt(L);
 up1 = 1/sqrt(L);
@@ -189,16 +185,10 @@ w2 = reshape(w2_1d,[(M+1),N]);
 % w2_epoch = zeros(R,(M+1)*N);
 
 for r = VALIDATION
-    x = zeros(1,L);
-    for i = 1:L
-        x(i) = dataset(r,i); % input value, x
-    end
+    x = dataset(r,1:L); % input value, x
 
-    Y_ = zeros(1,N);
-    for i = 1:N
-        Y_(i) = dataset(r,L+1+i); % Output value, Y hat
-    end
-%     Y_epoch(r,:) = Y_;
+    Y_ = dataset(r,L+2:L+1+N); % Output value, Y hat
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%% Feed- Forward %%%%%%%%%%%
@@ -236,11 +226,9 @@ for r = VALIDATION
     end
     y2_epoch(r,:) = y2;
 
-    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-%         E = Y_ - y2;
-    for i = 1:2
-        Error(r,i) = E(i);
-    end
+    len = length(VALIDATION);
+    E = (0.5/len)*(Y_ - y2).^2; % Error cost function
+    Error(r,:) = E;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,16 +299,9 @@ w2_1d = low2 + (up2-low2).*rand((M+1)*N,1);
 w2 = reshape(w2_1d,[(M+1),N]);
 
 for r = TEST
-    x = zeros(1,L);
-    for i = 1:L
-        x(i) = dataset(r,i); % input value, x
-    end
+    x = dataset(r,1:L); % input value, x
 
-    Y_ = zeros(1,N);
-    for i = 1:N
-        Y_(i) = dataset(r,L+1+i); % Output value, Y hat
-    end
-%     Y_epoch(r,:) = Y_;
+    Y_ = dataset(r,L+2:L+1+N); % Output value, Y hat
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -359,11 +340,9 @@ for r = TEST
     end
     y2_epoch(r,:) = y2;
 
-    E = (0.5/(0.7*R))*(Y_ - y2).^2; % Error cost function
-%         E = Y_ - y2;
-    for i = 1:2
-        Error(r,i) = E(i);
-    end
+    len = length(TEST);
+    E = (0.5/len)*(Y_ - y2).^2; % Error cost function
+    Error(r,:) = E;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
