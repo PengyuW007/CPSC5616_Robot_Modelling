@@ -108,7 +108,8 @@ for r = TRAIN
             netCurr = netCurr+x(l)*w1(l,m);
         end
         net1(m) = netCurr + BIAS*w1(L+1,m);
-        y1(m) = 1/(1+exp(-net1(m))); % Sigmoid function
+%         y1(m) = 1/(1+exp(-net1(m))); % Sigmoid function
+y1(m) = tan(net1);
     end
 
     %%%%%%%%%%%%%%%%%%%
@@ -448,3 +449,7 @@ writematrix(Error,errorFile,'Sheet',1);
 % writematrix(w2_epoch,weightsFile,'Sheet',4);
 
 toc;
+
+function y = tanh(net)
+y = (exp(2*net)-1)/(exp(2*net)+1);
+end

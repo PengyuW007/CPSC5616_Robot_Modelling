@@ -1,4 +1,7 @@
-clear "all"; tic
+clc;
+close all;
+clear;
+tic
 
 file = 3;
 
@@ -16,8 +19,6 @@ data = data{:,:};
 %w = 1:0.1:100;
 %data = [x',w',sin(x+w)',(x+w)', 2*(x+w)'];
 
-toc
-
 % Split the data into training, validation, and testing sets
 numData = size(data, 1);
 numTrain = round(0.6*numData);
@@ -34,7 +35,7 @@ numOutputNeurons = 2;
 
 % Define the learning rate and the number of epochs for training
 learningRate = 0.000001;
-numEpochs = 2000;
+numEpochs = 50000;
 bias = 1;
 
 % Initialize variables to store the best weights and validation error
@@ -136,5 +137,5 @@ plot(1:numTest, testData(:,end), 'green', 1:numTest, output(:,2), 'blue')
 %testError = mean(rms(testData(:, numInputNeurons+2:end) - output, 2));
 
 %fprintf('Test Error: %d\n', testError);
-
+toc
 
