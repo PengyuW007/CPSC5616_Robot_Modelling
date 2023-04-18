@@ -35,7 +35,7 @@ numOutputNeurons = 2;
 
 % Define the learning rate and the number of epochs for training
 learningRate = 0.000001;
-numEpochs = 50000;
+numEpochs = 2000;
 bias = 1;
 
 % Initialize variables to store the best weights and validation error
@@ -44,7 +44,8 @@ bestWeightsHiddenToOutput = [];
 bestValidationError = inf;
 %weight1Record = zeros(numTrain*numEpochs,(numInputNeurons+1)*numHiddenNeurons);
 %weight2Record = zeros(numTrain*numEpochs,(numHiddenNeurons+1)*numOutputNeurons);
-valError = zeros(numEpochs,2);
+valLoss = zeros(numEpochs,1);
+trainLosses = zeros(numEpochs,1);
 
 % Train the MLP with different numbers of neurons in hidden layer
 for numHiddenNeurons = numHiddenNeurons:numHiddenNeurons
@@ -74,26 +75,28 @@ for numHiddenNeurons = numHiddenNeurons:numHiddenNeurons
         %weight1Record(i+(epoch-1)*numTrain,:) = reshape(weightsInputToHidden.',1,[]);
         %weight2Record(i+(epoch-1)*numTrain,:) = reshape(weightsHiddenToOutput.',1,[]);
 
-
+        % Compute the training error
+        t = shuffledData(:, numInputNeurons+2:end) - output;
+        trainLoss = sum(sum((t).^2))/numTrain;
+        trainLosses(epoch,:) = trainLoss;
 
         % Compute the validation error
         input = [bias .* ones(numVal, 1), valData(:, 1:numInputNeurons)]; % Add bias term
         hidden = tanh(input * weightsInputToHidden); % Activation function
         output = tanh([bias .* ones(numVal,1), hidden] * weightsHiddenToOutput); % Activation function  
         t = valData(:, numInputNeurons+2:end) - output;
-        validationError = sum(sum((t).^2))/numVal;
-        valError(epoch,:) = validationError;
+        validationLoss = sum(sum((t).^2))/numVal;
+        valLoss(epoch,:) = validationLoss;
         if mod(epoch, 100) == 0
-            fprintf('Epoch %d, Loss: %f\n', epoch, validationError);
+            fprintf('Epoch %d, Loss: %f\n', epoch, validationLoss);
         end
 
         % Store the best weights and validation error
-        if validationError < bestValidationError
+        if validationLoss < bestValidationError
             bestWeightsInputToHidden = weightsInputToHidden;
             bestWeightsHiddenToOutput = weightsHiddenToOutput;
-            bestValidationError = validationError;
-            %disp("found min");
-        elseif validationError > bestValidationError * 3
+            bestValidationError = validationLoss;
+        elseif validationLoss > bestValidationError
             %break;
         end
     end
@@ -111,7 +114,9 @@ for numHiddenNeurons = numHiddenNeurons:numHiddenNeurons
 %}
 
     figure(3);
-    plot(valError); title("Validation Error vs Number of Epoch");
+    plot(1:numEpochs, trainLosses, 'yellow', 1:numEpochs, valLoss, 'blue');
+    title("Train Loss(Yellow) and Validation Loss(Blue) vs Number of Epoch");
+    legend('Train Loss','Validation Loss');
 
 %{
     % Stop increasing the number of hidden neurons if there is no change in validation error
