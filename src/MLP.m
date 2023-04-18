@@ -108,8 +108,8 @@ for r = TRAIN
             netCurr = netCurr+x(l)*w1(l,m);
         end
         net1(m) = netCurr + BIAS*w1(L+1,m);
-%         y1(m) = 1/(1+exp(-net1(m))); % Sigmoid function
-y1(m) = tanh(net1(m));
+        y1(m) = 1/(1+exp(-net1(m))); % Sigmoid function
+% y1(m) = tanh(net1(m));
     end
 
     %%%%%%%%%%%%%%%%%%%
