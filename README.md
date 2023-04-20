@@ -9,9 +9,11 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 3. [Zhu, Ziping](https://github.com/0v0-QAQ) or [Zhu, Ziping](https://github.com/zzhu4LU), 0422426
 
 Deliverable:
+
 1.[Presentation](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/Presentation/CPSC%205616%20Robot%20Modelling%20Using%20LSTMs_V3_Presentation%20.pdf)
 
 2. Codes: 
+
     a. [MLP.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/MLP_Sequential_sigmoid/MLP.m) under src/MLP_Sequential_sigmoid, 
 
     b. [project_v2.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/MLP_Batch_tanh/project_v2.m) under src/MLP_Batch_tanh and 
