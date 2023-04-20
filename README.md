@@ -8,6 +8,20 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 2. [Zhang, Haokun](https://github.com/haokunzhang), 0424660
 3. [Zhu, Ziping](https://github.com/0v0-QAQ) or [Zhu, Ziping](https://github.com/zzhu4LU), 0422426
 
+Deliverable:
+1.[Presentation](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/Presentation/CPSC%205616%20Robot%20Modelling%20Using%20LSTMs_V3_Presentation%20.pdf)
+
+2. Codes: 
+    a. [MLP.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/MLP_Sequential_sigmoid/MLP.m) under src/MLP_Sequential_sigmoid, 
+
+    b. [project_v2.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/MLP_Batch_tanh/project_v2.m) under src/MLP_Batch_tanh and 
+
+    c. [LSTM.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/LSTM/LSTM.m) under src/LSTM
+
+3. [Project Report](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/Paper/Robot%20Modelling%20Using%20LSTMs%20and%20BP.pdf)
+
+4. [Data set used for training]()
+
 ### Version Control Systems
 1. [Repository](https://github.com/PengyuW007/CPSC5616_Robot_Modelling.git) OR	
 
@@ -23,7 +37,7 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 3. If you have MatLab compiler, just click run button. 
 Please run these three files, MLP.m under src/MLP_Sequential_sigmoid, project_v2.m under src/MLP_Batch_tanh and LSTM.m under src/LSTM folders, which shows the results of MLP and LSTM after training.
 
-#### **Reminder**: ##
+#### Reminder: ##
 1. MLP.m -> src/MLP_Sequential_sigmoid: This would take 2 MINs.
 
 2. project_v2.m -> src/MLP_Batch_tanh: At line 50, there you can adjust the number of epoch, if you want to show complete results matches with report, 
@@ -45,8 +59,8 @@ There are 3 files for input and output, for training convenience, I separate the
 ### Packages:
     - Paper
         - IEEE Paper Format.docx
-        - [Robot Modelling Using LSTMs and BP.docx](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/Paper/Robot%20Modelling%20Using%20LSTMs%20and%20BP.docx): Final report for word format.
-        - [Robot Modelling Using LSTMs and BP.docx.pdf](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/Paper/Robot%20Modelling%20Using%20LSTMs%20and%20BP.pdf): Final report for pdf format
+        - Robot Modelling Using LSTMs and BP.docx: Final report for word format.
+        - Robot Modelling Using LSTMs and BP.docx.pdf: Final report for pdf format
     - Presentation
         - gifs used on presentation slides
         - CPSC 5616 Robot Modelling Using LSTMs_V1_Presentation.pdf
