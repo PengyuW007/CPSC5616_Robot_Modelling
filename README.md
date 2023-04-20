@@ -24,14 +24,13 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 Please run these three files, MLP.m under src/MLP_Sequential_sigmoid, project_v2.m under src/MLP_Batch_tanh and LSTM.m under src/LSTM folders, which shows the results of MLP and LSTM after training.
 
 Reminder: 
+1. MLP.m -> src/MLP_Sequential_sigmoid: This would take 2 MINs.
 
-    1. MLP.m -> src/MLP_Sequential_sigmoid: This would take 2 MINs.
-
-    2. project_v2.m -> src/MLP_Batch_tanh: At line 50, there you can adjust the number of epoch, if you want to show complete results matches with report, 
+2. project_v2.m -> src/MLP_Batch_tanh: At line 50, there you can adjust the number of epoch, if you want to show complete results matches with report, 
 you can adjust it to 50000, which took us 1 hour by CPU: i7-10750H OR 30 min by Apple M1.
-    If you think it is too long to wait, decrease it to 2000 would be better for you.
- 
-    3. LSTM.m -> src/LSTM: It took 2 mins.
+If you think it is too long to wait, decrease it to 2000 would be better for you.
+
+3. LSTM.m -> src/LSTM: It took 2 mins.
 
 ### Datasets
 There are 3 files for input and output, for training convenience, I separate them into 3. Please run the third one
