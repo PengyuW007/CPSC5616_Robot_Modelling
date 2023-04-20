@@ -1,3 +1,15 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% COURSE: CPSC 5616
+% MEMBER: 
+%       Pengyu Wang, 0425157
+%       Haokun Zhang, 0424660
+%       Ziping Zhu, 0422426
+% PROJECT: Robot Modelling by Using MLP Batch
+%
+% REMARKS: Prediction of robot motion
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clc;
 close all;
 clear;
@@ -35,7 +47,7 @@ numOutputNeurons = 2;
 
 % Define the learning rate and the number of epochs for training
 learningRate = 0.000001;
-numEpochs = 2000;
+numEpochs = 50000;
 bias = 1;
 
 % Initialize variables to store the best weights and validation error
@@ -137,6 +149,7 @@ subplot(2,1,1);
 plot(1:numTest, testData(:,end-1), 'green', 1:numTest, output(:,1), 'blue')
 subplot(2,1,2);
 plot(1:numTest, testData(:,end), 'green', 1:numTest, output(:,2), 'blue')
+title("Test set prediction");
 
 %testError = sqrt(mean(sum(testData(:, numInputNeurons+2:end) - output, 2).^2));
 %testError = mean(rms(testData(:, numInputNeurons+2:end) - output, 2));
