@@ -45,8 +45,8 @@ There are 3 files for input and output, for training convenience, I separate the
 ### Packages:
     - Paper
         - IEEE Paper Format.docx
-        - Robot Modelling Using LSTMs and BP.docx: Final report for word format.
-        - Robot Modelling Using LSTMs and BP.docx.pdf: Final report for pdf format
+        - [Robot Modelling Using LSTMs and BP.docx](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/Paper/Robot%20Modelling%20Using%20LSTMs%20and%20BP.docx): Final report for word format.
+        - [Robot Modelling Using LSTMs and BP.docx.pdf](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/Paper/Robot%20Modelling%20Using%20LSTMs%20and%20BP.pdf): Final report for pdf format
     - Presentation
         - gifs used on presentation slides
         - CPSC 5616 Robot Modelling Using LSTMs_V1_Presentation.pdf
