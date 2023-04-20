@@ -23,7 +23,7 @@ Group Project of CPSC5616 Machine and Deep Learning at Laurentian University
 3. If you have MatLab compiler, just click run button. 
 Please run these three files, MLP.m under src/MLP_Sequential_sigmoid, project_v2.m under src/MLP_Batch_tanh and LSTM.m under src/LSTM folders, which shows the results of MLP and LSTM after training.
 
-## **Reminder**: ##
+#### **Reminder**: ##
 1. MLP.m -> src/MLP_Sequential_sigmoid: This would take 2 MINs.
 
 2. project_v2.m -> src/MLP_Batch_tanh: At line 50, there you can adjust the number of epoch, if you want to show complete results matches with report, 
