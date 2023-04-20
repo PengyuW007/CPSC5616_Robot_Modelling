@@ -14,7 +14,7 @@ Deliverable:
 
 2. Codes: 
 
-    a. [MLP.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/MLP_Sequential_sigmoid/MLP.m)     under src/MLP_Sequential_sigmoid, 
+    a. [MLP.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/MLP_Sequential_sigmoid/MLP.m) under src/MLP_Sequential_sigmoid, 
 
     b. [project_v2.m](https://github.com/PengyuW007/CPSC5616_Robot_Modelling/blob/master/src/MLP_Batch_tanh/project_v2.m) under src/MLP_Batch_tanh and 
 
