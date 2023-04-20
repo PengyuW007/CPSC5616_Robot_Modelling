@@ -449,7 +449,3 @@ writematrix(Error,errorFile,'Sheet',1);
 % writematrix(w2_epoch,weightsFile,'Sheet',4);
 
 toc;
-
-function y = tanh(net)
-y = (exp(2*net)-1)/(exp(2*net)+1);
-end
